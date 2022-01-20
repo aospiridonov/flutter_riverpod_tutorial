@@ -16,7 +16,7 @@ class FakeHttpClient {
 
 final fakeHttpClientProvider = Provider((ref) => FakeHttpClient());
 final responceProvider =
-    FutureProvider.family<String, String>((ref, url) async {
+    FutureProvider.autoDispose.family<String, String>((ref, url) async {
   final httpClient = ref.read(fakeHttpClientProvider);
   return httpClient.get(url);
 });
