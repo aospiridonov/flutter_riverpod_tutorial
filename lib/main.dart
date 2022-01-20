@@ -7,42 +7,30 @@ void main() => runApp(
       ),
     );
 
-class IncrementNotifier extends ChangeNotifier {
-  int _value = 0;
-  int get value => _value;
-
-  void increment() {
-    _value++;
-    notifyListeners();
-  }
-}
-
-final incrementProvider = ChangeNotifierProvider((ref) => IncrementNotifier());
+final firstStringProvider = Provider((ref) => 'First');
+final secondStringProvider = Provider((ref) => 'Second');
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final first = ref.watch(firstStringProvider);
+    final second = ref.watch(secondStringProvider);
     return MaterialApp(
       title: 'Riverpod Tutorial',
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Riverpod Tutorial'),
-        ),
-        body: Center(
-          child: Consumer(
-            builder: (context, ref, child) {
-              final incrementNotifier = ref.watch(incrementProvider);
-              return Text(incrementNotifier.value.toString());
-            },
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            ref.read(incrementProvider).increment();
-          },
-          child: Icon(Icons.add),
+        body: Column(
+          children: [
+            Text(
+              first,
+              style: TextStyle(fontSize: 30),
+            ),
+            Text(
+              second,
+              style: TextStyle(fontSize: 30),
+            ),
+          ],
         ),
       ),
     );
