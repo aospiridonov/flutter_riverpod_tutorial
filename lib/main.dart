@@ -28,24 +28,13 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (context) => MyFirstClass(),
-      child: ProxyProvider<MyFirstClass, MySecondClass>(
-        update: (context, firstClass, previous) => MySecondClass(firstClass),
-        child: Builder(
-          builder: (context) {
-            return Text(Provider.of<MySecondClass>(context).myFirstClass.value);
-          },
-        ),
+      create: (context) => 'A String far away.',
+      child: Provider(
+        create: (context) => 'A String that is close.',
+        builder: (context, child) {
+          return Text(Provider.of<String>(context));
+        },
       ),
     );
   }
-}
-
-class MyFirstClass {
-  final value = 'hello';
-}
-
-class MySecondClass {
-  final MyFirstClass myFirstClass;
-  MySecondClass(this.myFirstClass);
 }
